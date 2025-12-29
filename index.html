@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        /* 核心配色：淡淡的果園綠底色 */
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #f4f7f4; color: #2c3e50; overflow-x: hidden; }
         .brand-font { font-family: 'Noto Serif TC', serif; }
         .page { display: none; opacity: 0; transition: opacity 0.6s ease; }
@@ -18,14 +19,14 @@
         section { padding: 100px 0; }
         .text-lead { line-height: 2.3; letter-spacing: 0.05em; }
         
-        /* 統一按鈕風格：森林綠 */
+        /* 商品按鈕：森林綠風格 */
         .spec-btn { border: 1.5px solid #d1d9d1; padding: 10px 10px; border-radius: 8px; font-weight: 700; transition: all 0.3s; color: #7f8c8d; font-size: 0.75rem; background: white; width: 100%; }
         .spec-btn.active { border-color: #064e3b; background-color: #064e3b; color: white; }
         .pay-btn { border: 2px solid #d1d9d1; padding: 12px; border-radius: 12px; flex: 1; text-align: center; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .pay-btn.active { border-color: #064e3b; background-color: #064e3b; color: white; }
         .hero-gradient { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(6,78,59,0.7) 100%); }
 
-        /* 暫無販售區：維持圖片回歸 */
+        /* 暫無販售區：維持灰階以示區別 */
         .sold-out { opacity: 0.6; filter: grayscale(1); pointer-events: none; position: relative; }
         .sold-out::after { content: "非產季 / 暫無販售"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(6,78,59,0.9); color: white; padding: 10px 20px; border-radius: 4px; font-weight: bold; z-index: 20; letter-spacing: 0.1em; font-size: 0.8rem; }
     </style>
@@ -37,11 +38,11 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
         </button>
         <div class="text-2xl font-black tracking-tighter text-emerald-900 brand-font cursor-pointer" onclick="showPage('home')">WAKANO FRUIT</div>
-        <div class="hidden lg:flex space-x-10 text-sm tracking-[0.1em] font-bold text-slate-400 uppercase">
+        <div class="hidden lg:flex space-x-10 text-sm tracking-[0.1em] font-bold text-slate-500 uppercase">
             <button onclick="showPage('home')" class="hover:text-emerald-900 transition">當季選購</button>
             <button onclick="showPage('about')" class="hover:text-emerald-900 transition">關於我們</button>
             <button onclick="showPage('philosophy')" class="hover:text-emerald-900 transition">選果哲學</button>
-            <button onclick="showPage('nutrition')" class="hover:text-emerald-900 transition font-black text-emerald-700">果物百科</button>
+            <button onclick="showPage('nutrition')" class="hover:text-emerald-900 transition">果物百科</button>
             <button onclick="showPage('guide')" class="hover:text-emerald-900 transition">熟成指南</button>
             <button onclick="showPage('faq')" class="hover:text-emerald-900 transition">常見問答</button>
         </div>
@@ -56,7 +57,7 @@
         <button onclick="mobileNavigate('home')" class="text-2xl text-white font-bold brand-font">當季選購</button>
         <button onclick="mobileNavigate('about')" class="text-2xl text-white font-bold brand-font">關於我們</button>
         <button onclick="mobileNavigate('philosophy')" class="text-2xl text-white font-bold brand-font">選果哲學</button>
-        <button onclick="mobileNavigate('nutrition')" class="text-2xl text-orange-400 font-bold brand-font">果物百科</button>
+        <button onclick="mobileNavigate('nutrition')" class="text-2xl text-white font-bold brand-font">果物百科</button>
         <button onclick="mobileNavigate('guide')" class="text-2xl text-white font-bold brand-font">熟成指南</button>
         <button onclick="mobileNavigate('faq')" class="text-2xl text-white font-bold brand-font">常見問答</button>
     </div>
@@ -129,7 +130,7 @@
                         <p class="font-bold text-emerald-900 italic underline decoration-orange-400 underline-offset-8">01 / 從數據到泥土</p>
                         <p>我曾是一名在台北 101 大樓裡追逐 KPI 的數位行銷人。每天看著螢幕。直到 2022 年的中秋返鄉，我看見父親在鹿野烈日下汗流浹背、為了疏果而微微駝下的背影。那一刻我明白，如果我不回來，鹿野紅土地的這份鮮甜，將會斷在這一代的手裡。</p>
                     </div>
-                    <img src="https://images.unsplash.com/photo-1594488310376-7456722d718b?auto=format&fit=crop&w=800" class="rounded-[80px] shadow-3xl grayscale hover:grayscale-0 transition duration-1000">
+                    <img src="https://images.unsplash.com/photo-1594488310376-7456722d718b?auto=format&fit=crop&w=1200" class="rounded-[80px] shadow-3xl transition duration-1000">
                 </div>
                 <p class="max-w-3xl mx-auto border-t border-slate-200 pt-32 text-center italic">"Wakano 取自日文「若野」，象徵青年回歸原野。我們堅持「自產自銷」，每一顆釋迦從套袋到裝箱通通親手把關。這不是一門生意，這是對故鄉最深情的告白。"</p>
             </div>
@@ -169,10 +170,10 @@
                     <div class="md:w-1/2 space-y-10">
                         <span class="text-emerald-800 font-mono text-sm tracking-widest font-bold">Vol. 01 / 大目釋迦</span>
                         <h4 class="text-5xl font-black brand-font text-emerald-900">森林的卡士達</h4>
-                        <p class="text-slate-500 text-xl leading-loose">熟成後擁有如天然冰淇淋般的絲滑感，這是鹿野紅土地賦予的特有乳香。富含維生素 C 與鉀離子。</p>
+                        <p class="text-slate-500 text-xl leading-loose">熟成後擁有如天然冰淇淋般的絲滑感，這是鹿野紅土地賦予的特有乳香。富含維生素 C 與鉀離子，幫助調節血壓。</p>
                     </div>
                     <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
-                        <img src="https://images.unsplash.com/photo-1595475207225-428b62bda831?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                        <img src="https://images.unsplash.com/photo-1595475207225-428b62bda831?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-1000">
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row-reverse items-center gap-24">
@@ -182,7 +183,7 @@
                         <p class="text-slate-500 text-xl leading-loose">果肉潔白如玉，口感 Q 彈有勁。獨特的微酸風味中和了甜膩。含豐富膳食纖維與維生素 B2。</p>
                     </div>
                     <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
-                        <img src="https://images.unsplash.com/photo-1615485500704-8e990f3900f1?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                        <img src="https://images.unsplash.com/photo-1615485500704-8e990f3900f1?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-1000">
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row items-center gap-24">
@@ -192,7 +193,7 @@
                         <p class="text-slate-500 text-xl leading-loose">肉質細緻，連心都脆甜。富含鳳梨酵素與維生素 B1，是消食、提振精神的最佳選物。</p>
                     </div>
                     <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
-                        <img src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                        <img src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-1000">
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row-reverse items-center gap-24">
@@ -202,7 +203,7 @@
                         <p class="text-slate-500 text-xl leading-loose">果皮深紅脆甜，咬下如同喝水般解渴。富含花青素與高水分，低熱量無負擔。</p>
                     </div>
                     <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
-                        <img src="https://images.unsplash.com/photo-1610410051111-f1873e1645e5?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                        <img src="https://images.unsplash.com/photo-1610410051111-f1873e1645e5?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-1000">
                     </div>
                 </div>
             </div>
@@ -269,7 +270,7 @@
 
     <script>
         const config = {
-            dm: { name: '大目釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1380, d: '精品級 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1180, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1080, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 880, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 850, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 750, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 650, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 550, d: '良果級 | 小果 | 小禮盒' } } },
+            dm: { name: '大目釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1380, d: '精品禮盒 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1180, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1080, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 880, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 850, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 750, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 650, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 550, d: '良果級 | 小果 | 小禮盒' } } },
             fn: { name: '鳳梨釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1450, d: '精品級 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1250, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1150, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 1050, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 950, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 850, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 750, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 650, d: '良果級 | 小果 | 小禮盒' } } }
         };
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
