@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>若野果物 | 台東鹿野精品果物選拔店</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f4f7f4; color: #2c3e50; overflow-x: hidden; }
+        .brand-font { font-family: 'Noto Serif TC', serif; }
+        .page { display: none; opacity: 0; transition: opacity 0.6s ease; }
+        .page.active { display: block; opacity: 1; }
+        .cart-sidebar { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); transform: translateX(100%); }
+        .cart-sidebar.open { transform: translateX(0); }
+        .mobile-menu { transition: transform 0.4s ease; transform: translateY(-100%); }
+        .mobile-menu.open { transform: translateY(0); }
+        section { padding: 100px 0; }
+        .text-lead { line-height: 2.3; letter-spacing: 0.05em; }
+        
+        /* 統一按鈕風格：森林綠 */
+        .spec-btn { border: 1.5px solid #d1d9d1; padding: 10px 10px; border-radius: 8px; font-weight: 700; transition: all 0.3s; color: #7f8c8d; font-size: 0.75rem; background: white; width: 100%; }
+        .spec-btn.active { border-color: #064e3b; background-color: #064e3b; color: white; }
+        .pay-btn { border: 2px solid #d1d9d1; padding: 12px; border-radius: 12px; flex: 1; text-align: center; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .pay-btn.active { border-color: #064e3b; background-color: #064e3b; color: white; }
+        .hero-gradient { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(6,78,59,0.7) 100%); }
+
+        /* 暫無販售區：維持圖片回歸 */
+        .sold-out { opacity: 0.6; filter: grayscale(1); pointer-events: none; position: relative; }
+        .sold-out::after { content: "非產季 / 暫無販售"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(6,78,59,0.9); color: white; padding: 10px 20px; border-radius: 4px; font-weight: bold; z-index: 20; letter-spacing: 0.1em; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="flex justify-between items-center px-6 md:px-16 py-8 bg-[#f4f7f4]/95 backdrop-blur-md sticky top-0 z-50 border-b border-[#dce3dc]">
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-emerald-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+        <div class="text-2xl font-black tracking-tighter text-emerald-900 brand-font cursor-pointer" onclick="showPage('home')">WAKANO FRUIT</div>
+        <div class="hidden lg:flex space-x-10 text-sm tracking-[0.1em] font-bold text-slate-400 uppercase">
+            <button onclick="showPage('home')" class="hover:text-emerald-900 transition">當季選購</button>
+            <button onclick="showPage('about')" class="hover:text-emerald-900 transition">關於我們</button>
+            <button onclick="showPage('philosophy')" class="hover:text-emerald-900 transition">選果哲學</button>
+            <button onclick="showPage('nutrition')" class="hover:text-emerald-900 transition font-black text-emerald-700">果物百科</button>
+            <button onclick="showPage('guide')" class="hover:text-emerald-900 transition">熟成指南</button>
+            <button onclick="showPage('faq')" class="hover:text-emerald-900 transition">常見問答</button>
+        </div>
+        <button onclick="toggleCart()" class="relative bg-emerald-900 text-white p-4 rounded-full shadow-lg hover:scale-105 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full ring-2 ring-white font-bold">0</span>
+        </button>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-emerald-900 z-[60] mobile-menu flex flex-col items-center justify-center space-y-10">
+        <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+        <button onclick="mobileNavigate('home')" class="text-2xl text-white font-bold brand-font">當季選購</button>
+        <button onclick="mobileNavigate('about')" class="text-2xl text-white font-bold brand-font">關於我們</button>
+        <button onclick="mobileNavigate('philosophy')" class="text-2xl text-white font-bold brand-font">選果哲學</button>
+        <button onclick="mobileNavigate('nutrition')" class="text-2xl text-orange-400 font-bold brand-font">果物百科</button>
+        <button onclick="mobileNavigate('guide')" class="text-2xl text-white font-bold brand-font">熟成指南</button>
+        <button onclick="mobileNavigate('faq')" class="text-2xl text-white font-bold brand-font">常見問答</button>
+    </div>
+
+    <main id="home-page" class="page active">
+        <section class="relative h-[80vh] flex items-center justify-center text-center p-0 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1610832958506-ee5633817d70?auto=format&fit=crop&w=1600" class="absolute inset-0 w-full h-full object-cover brightness-50 scale-105">
+            <div class="absolute inset-0 hero-gradient"></div>
+            <div class="relative z-10 max-w-5xl px-6 text-white text-center">
+                <h2 class="text-emerald-300 tracking-[0.8em] mb-6 brand-font text-xl italic underline decoration-orange-400 underline-offset-8">LUYE ARTISAN</h2>
+                <h1 class="text-5xl md:text-8xl font-black brand-font mb-10 leading-tight">台東紅土地，<br>生命極致之味。</h1>
+                <button onclick="scrollToSection('products')" class="bg-white text-emerald-900 px-16 py-6 rounded-full font-bold text-xl hover:bg-orange-600 hover:text-white transition-all shadow-2xl tracking-widest uppercase">進入選物區</button>
+            </div>
+        </section>
+
+        <section id="products" class="bg-[#ebf2eb]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-24">
+                    <h2 class="text-6xl font-black brand-font text-emerald-900 mb-6 tracking-tight">當季選購</h2>
+                    <p class="text-orange-500 tracking-[0.5em] text-sm uppercase font-bold italic underline decoration-emerald-900">Seasonal Selection</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 text-left">
+                    <div class="bg-white rounded-[60px] p-12 shadow-sm border border-slate-100 flex flex-col h-full group hover:shadow-2xl transition duration-500">
+                        <div class="overflow-hidden rounded-[40px] mb-10 h-72"><img src="https://images.unsplash.com/photo-1595475207225-428b62bda831?auto=format&fit=crop&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000"></div>
+                        <h3 class="text-4xl font-bold brand-font mb-4 text-emerald-900">鹿野老欉大目釋迦</h3>
+                        <div class="space-y-8 mb-10 flex-grow">
+                            <div><label class="text-[10px] font-black text-slate-400 mb-3 block tracking-widest">1. 等級 Grade</label><div class="flex gap-3"><button onclick="setSpec('dm', 'premium')" id="dm-grade-premium" class="spec-btn active">精品禮盒</button><button onclick="setSpec('dm', 'basic')" id="dm-grade-basic" class="spec-btn">普通良果箱</button></div></div>
+                            <div><label class="text-[10px] font-black text-slate-400 mb-3 block tracking-widest">2. 大小 Size</label><div class="flex gap-3"><button onclick="setSpec('dm', null, 'big')" id="dm-size-big" class="spec-btn active">大果</button><button onclick="setSpec('dm', null, 'small')" id="dm-size-small" class="spec-btn">小果</button></div></div>
+                            <div><label class="text-[10px] font-black text-slate-400 mb-3 block tracking-widest">3. 包裝 Box</label><div class="flex gap-3"><button onclick="setSpec('dm', null, null, 'big-box')" id="dm-box-big-box" class="spec-btn active">大禮盒</button><button onclick="setSpec('dm', null, null, 'small-box')" id="dm-box-small-box" class="spec-btn">小禮盒</button></div></div>
+                        </div>
+                        <div class="flex justify-between items-end border-t border-slate-100 pt-8"><div><span id="dm-price" class="text-5xl font-black text-emerald-900 font-mono italic">NT$ 1,380</span><p id="dm-desc" class="text-slate-400 text-[10px] mt-2 font-bold uppercase tracking-widest">精品禮盒 | 大果 | 大禮盒</p></div><button onclick="addSpecToCart('dm')" class="bg-emerald-900 text-white px-8 py-4 rounded-full font-bold hover:bg-orange-600 transition shadow-lg shrink-0 uppercase">加入籃子</button></div>
+                    </div>
+
+                    <div class="bg-white rounded-[60px] p-12 shadow-sm border border-slate-100 flex flex-col h-full group hover:shadow-2xl transition duration-500">
+                        <div class="overflow-hidden rounded-[40px] mb-10 h-72"><img src="https://images.unsplash.com/photo-1615485500704-8e990f3900f1?auto=format&fit=crop&w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000"></div>
+                        <h3 class="text-4xl font-bold brand-font mb-4 text-emerald-900">精品鳳梨釋迦</h3>
+                        <div class="space-y-8 mb-10 flex-grow">
+                            <div><label class="text-[10px] font-black text-slate-400 mb-3 block tracking-widest">1. 等級 Grade</label><div class="flex gap-3"><button onclick="setSpec('fn', 'premium')" id="fn-grade-premium" class="spec-btn active">精品禮盒</button><button onclick="setSpec('fn', 'basic')" id="fn-grade-basic" class="spec-btn">普通良果箱</button></div></div>
+                            <div><label class="text-[10px] font-black text-slate-400 mb-3 block tracking-widest">2. 大小 Size</label><div class="flex gap-3"><button onclick="setSpec('fn', null, 'big')" id="fn-size-big" class="spec-btn active">大果</button><button onclick="setSpec('fn', null, 'small')" id="fn-size-small" class="spec-btn">小果</button></div></div>
+                            <div><label class="text-[10px] font-black text-slate-400 mb-3 block tracking-widest">3. 包裝 Box</label><div class="flex gap-3"><button onclick="setSpec('fn', null, null, 'big-box')" id="fn-box-big-box" class="spec-btn active">大禮盒</button><button onclick="setSpec('fn', null, null, 'small-box')" id="fn-box-small-box" class="spec-btn">小禮盒</button></div></div>
+                        </div>
+                        <div class="flex justify-between items-end border-t border-slate-100 pt-8"><div><span id="fn-price" class="text-5xl font-black text-emerald-900 font-mono italic">NT$ 1,450</span><p id="fn-desc" class="text-slate-400 text-[10px] mt-2 font-bold uppercase tracking-widest">精品禮盒 | 大果 | 大禮盒</p></div><button onclick="addSpecToCart('fn')" class="bg-emerald-900 text-white px-8 py-4 rounded-full font-bold hover:bg-orange-600 transition shadow-lg shrink-0 uppercase">加入籃子</button></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mt-20">
+                    <div class="sold-out space-y-4">
+                        <div class="overflow-hidden rounded-[40px] mb-6 h-72"><img src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+                        <h3 class="text-2xl font-bold brand-font text-emerald-900 text-center">鹿野金鑽鳳梨</h3>
+                    </div>
+                    <div class="sold-out space-y-4">
+                        <div class="overflow-hidden rounded-[40px] mb-6 h-72"><img src="https://images.unsplash.com/photo-1610410051111-f1873e1645e5?auto=format&fit=crop&w=800" class="w-full h-full object-cover"></div>
+                        <h3 class="text-2xl font-bold brand-font text-emerald-900 text-center">黑糖芭比蓮霧</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="about-page" class="page bg-[#f4f7f4]">
+        <section class="py-40 max-w-5xl mx-auto px-6 text-justify">
+            <div class="text-center mb-32">
+                <h2 class="text-[10px] tracking-[1em] text-orange-500 font-black mb-6 uppercase">Our Story</h2>
+                <h3 class="text-5xl md:text-7xl font-black brand-font text-emerald-900 leading-tight italic">歸根，守護那一抹甜。</h3>
+            </div>
+            <div class="space-y-32 text-slate-600 text-lead text-xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-24 items-center text-left">
+                    <div class="space-y-8">
+                        <p class="font-bold text-emerald-900 italic underline decoration-orange-400 underline-offset-8">01 / 從數據到泥土</p>
+                        <p>我曾是一名在台北 101 大樓裡追逐 KPI 的數位行銷人。每天看著螢幕。直到 2022 年的中秋返鄉，我看見父親在鹿野烈日下汗流浹背、為了疏果而微微駝下的背影。那一刻我明白，如果我不回來，鹿野紅土地的這份鮮甜，將會斷在這一代的手裡。</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1594488310376-7456722d718b?auto=format&fit=crop&w=800" class="rounded-[80px] shadow-3xl grayscale hover:grayscale-0 transition duration-1000">
+                </div>
+                <p class="max-w-3xl mx-auto border-t border-slate-200 pt-32 text-center italic">"Wakano 取自日文「若野」，象徵青年回歸原野。我們堅持「自產自銷」，每一顆釋迦從套袋到裝箱通通親手把關。這不是一門生意，這是對故鄉最深情的告白。"</p>
+            </div>
+        </section>
+    </main>
+
+    <main id="philosophy-page" class="page">
+        <section class="py-40 bg-emerald-900 text-white text-center">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="text-6xl font-black brand-font mb-24 tracking-widest italic uppercase">1/10 菁英選拔</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-16 text-left">
+                    <div class="p-12 border border-emerald-700 bg-emerald-800/20 shadow-xl border-t-8 border-t-orange-400">
+                        <h4 class="text-3xl brand-font mb-8 text-orange-400 font-bold italic">殘酷分級</h4>
+                        <p class="text-emerald-100/70 text-base leading-loose">我們拒絕混合販售。每一顆果實都需經過對稱度與重量的精準測量，只有前 10% 能進入精品盒裝。</p>
+                    </div>
+                    <div class="p-12 border border-emerald-700 bg-emerald-800/20 shadow-xl border-t-8 border-t-orange-400">
+                        <h4 class="text-3xl brand-font mb-8 text-orange-400 font-bold italic">契作共好</h4>
+                        <p class="text-emerald-100/70 text-base leading-loose">連結鹿野當地理念相同的夥伴。我們以優於市場的價格回饋農人，確保土地能永續呼吸，讓傳承充滿尊嚴。</p>
+                    </div>
+                    <div class="p-12 border border-emerald-700 bg-emerald-800/20 shadow-xl border-t-8 border-t-orange-400">
+                        <h4 class="text-3xl brand-font mb-8 text-orange-400 font-bold italic">旬味直送</h4>
+                        <p class="text-emerald-100/70 text-base leading-loose">拒絕冷鏈抑熟，堅持「產地接單、現採現發」。您收到的果物，在 24 小時前還在鹿野的樹梢呼吸。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="nutrition-page" class="page bg-[#f4f7f4]">
+        <section class="py-32 md:py-48 max-w-6xl mx-auto px-6">
+            <div class="text-center mb-40">
+                <h2 class="text-xs tracking-[1em] text-orange-400 font-black mb-4 uppercase">The Encyclopedia</h2>
+                <h3 class="text-6xl font-black brand-font text-emerald-900 italic">果物風味與營養</h3>
+            </div>
+            <div class="space-y-72">
+                <div class="flex flex-col md:flex-row items-center gap-24">
+                    <div class="md:w-1/2 space-y-10">
+                        <span class="text-emerald-800 font-mono text-sm tracking-widest font-bold">Vol. 01 / 大目釋迦</span>
+                        <h4 class="text-5xl font-black brand-font text-emerald-900">森林的卡士達</h4>
+                        <p class="text-slate-500 text-xl leading-loose">熟成後擁有如天然冰淇淋般的絲滑感，這是鹿野紅土地賦予的特有乳香。富含維生素 C 與鉀離子。</p>
+                    </div>
+                    <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
+                        <img src="https://images.unsplash.com/photo-1595475207225-428b62bda831?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-24">
+                    <div class="md:w-1/2 space-y-10 text-right md:text-left">
+                        <span class="text-emerald-800 font-mono text-sm tracking-widest font-bold">Vol. 02 / 鳳梨釋迦</span>
+                        <h4 class="text-5xl font-black brand-font text-emerald-900">熱帶酸甜之王</h4>
+                        <p class="text-slate-500 text-xl leading-loose">果肉潔白如玉，口感 Q 彈有勁。獨特的微酸風味中和了甜膩。含豐富膳食纖維與維生素 B2。</p>
+                    </div>
+                    <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
+                        <img src="https://images.unsplash.com/photo-1615485500704-8e990f3900f1?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-24">
+                    <div class="md:w-1/2 space-y-10">
+                        <span class="text-emerald-800 font-mono text-sm tracking-widest font-bold">Vol. 03 / 金鑽鳳梨</span>
+                        <h4 class="text-5xl font-black brand-font text-emerald-900">陽光的精華</h4>
+                        <p class="text-slate-500 text-xl leading-loose">肉質細緻，連心都脆甜。富含鳳梨酵素與維生素 B1，是消食、提振精神的最佳選物。</p>
+                    </div>
+                    <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
+                        <img src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-24">
+                    <div class="md:w-1/2 space-y-10 text-right md:text-left">
+                        <span class="text-emerald-800 font-mono text-sm tracking-widest font-bold">Vol. 04 / 黑糖芭比</span>
+                        <h4 class="text-5xl font-black brand-font text-emerald-900">紅寶石補水</h4>
+                        <p class="text-slate-500 text-xl leading-loose">果皮深紅脆甜，咬下如同喝水般解渴。富含花青素與高水分，低熱量無負擔。</p>
+                    </div>
+                    <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
+                        <img src="https://images.unsplash.com/photo-1610410051111-f1873e1645e5?auto=format&fit=crop&w=800" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="guide-page" class="page bg-white">
+        <section class="py-40 max-w-4xl mx-auto px-6">
+            <h2 class="text-6xl font-black brand-font text-emerald-900 text-center mb-32 uppercase tracking-tighter">熟成指南</h2>
+            <div class="bg-orange-50 p-16 rounded-[40px] border-l-8 border-orange-400 mb-32 text-orange-950">
+                <h3 class="text-3xl font-black mb-6">⚠️ 不要進冰箱</h3>
+                <p class="text-xl font-bold">釋迦未變軟前絕不可放冰箱。低溫會導致果實永久無法變熟，變成「啞巴果」。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="bg-[#f4f7f4] p-12 rounded-[50px] border border-slate-100"><h4 class="text-2xl font-black text-emerald-900 mb-6">大目釋迦</h4><p class="leading-loose">輕壓蒂頭，如同「耳垂柔軟度」即可剝食。熟後果肉呈絲滑感。</p></div>
+                <div class="bg-[#f4f7f4] p-12 rounded-[50px] border border-slate-100"><h4 class="text-2xl font-black text-emerald-900 mb-6">鳳梨釋迦</h4><p class="leading-loose">環抱微壓有彈性即可。建議削皮後對切切片食用。</p></div>
+            </div>
+        </section>
+    </main>
+
+    <main id="faq-page" class="page py-40 bg-[#ebf2eb]">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-6xl font-black brand-font text-emerald-900 mb-20">常見問答</h2>
+            <div class="space-y-6 text-left">
+                <details class="group cursor-pointer bg-white p-10 rounded-[30px] shadow-sm"><summary class="flex justify-between items-center font-bold text-emerald-900 text-xl list-none"><span>📦 何時出貨？</span><span class="text-orange-400 group-open:rotate-180 transition">▼</span></summary><p class="mt-8 border-t pt-8">現採直送，約 2-4 工作天出貨。雨天順延。</p></details>
+                <details class="group cursor-pointer bg-white p-10 rounded-[30px] shadow-sm"><summary class="flex justify-between items-center font-bold text-emerald-900 text-xl list-none"><span>🚛 運費計算？</span><span class="text-orange-400 group-open:rotate-180 transition">▼</span></summary><p class="mt-8 border-t pt-8">滿 $2,500 免運，未達門檻黑貓 $160。</p></details>
+                <details class="group cursor-pointer bg-white p-10 rounded-[30px] shadow-sm"><summary class="flex justify-between items-center font-bold text-emerald-900 text-xl list-none"><span>⚠️ 壞果包賠？</span><span class="text-orange-400 group-open:rotate-180 transition">▼</span></summary><p class="mt-8 border-t pt-8">請於收到貨 24 小時內拍照傳送 LINE 客服處理。</p></details>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-emerald-900 text-white pt-24 pb-12 px-10 border-t-8 border-orange-400">
+        <div class="max-w-6xl mx-auto text-center md:text-left text-[10px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20 uppercase tracking-widest">
+                <a href="tel:0912345678" class="group"><h4 class="text-orange-400 font-bold mb-4">Telephone</h4><p class="text-white text-lg">0912-345-678</p></a>
+                <a href="#" class="group"><h4 class="text-orange-400 font-bold mb-4">LINE</h4><p class="text-white text-lg">@wakanofruit</p></a>
+                <a href="#" class="group"><h4 class="text-orange-400 font-bold mb-4">Facebook</h4><p class="text-white text-lg">若野果物</p></a>
+                <a href="#" class="group"><h4 class="text-orange-400 font-bold mb-4">Instagram</h4><p class="text-white text-lg italic">wakano_luye</p></a>
+            </div>
+            <div class="text-center pt-10 border-t border-emerald-800 opacity-30">© 2025 Wakano Fruit All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-[480px] h-full bg-[#f4f7f4] shadow-2xl z-[70] cart-sidebar p-12 flex flex-col">
+        <div class="flex justify-between items-center mb-10 border-b border-emerald-100 pb-6"><h2 class="text-2xl font-black brand-font text-emerald-900 italic">Basket</h2><button onclick="toggleCart()" class="text-slate-400 hover:text-black font-bold">CLOSE ✕</button></div>
+        <div id="cart-items" class="flex-grow overflow-y-auto space-y-6"></div>
+        <div class="border-t pt-10 mt-6"><div class="flex justify-between font-black mb-10 items-end"><span class="text-slate-400">總計</span><span id="cart-total" class="text-emerald-900 text-5xl font-mono underline decoration-orange-400 decoration-8 underline-offset-8">NT$ 0</span></div><button onclick="openCheckoutModal()" class="w-full bg-emerald-900 text-white py-8 rounded-full font-black text-xl hover:bg-orange-600 transition shadow-2xl">傳送訂單</button></div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/70 z-[65] hidden backdrop-blur-sm"></div>
+
+    <div id="checkout-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 hidden">
+        <div class="bg-[#f4f7f4] w-full max-w-lg rounded-[40px] p-12 relative shadow-2xl overflow-y-auto max-h-[90vh]">
+            <button onclick="closeCheckoutModal()" class="absolute top-10 right-10 text-slate-400 hover:text-black font-black">✕</button>
+            <h3 class="text-3xl font-black brand-font text-emerald-900 mb-10 italic">收件資訊</h3>
+            <div class="space-y-8">
+                <input type="text" id="cust-name" class="w-full bg-white border-none rounded-2xl p-5" placeholder="收件人姓名">
+                <input type="tel" id="cust-phone" class="w-full bg-white border-none rounded-2xl p-5" placeholder="電話號碼">
+                <input type="text" id="cust-address" class="w-full bg-white border-none rounded-2xl p-5" placeholder="配送地址">
+                <div class="flex gap-4"><div id="pay-cod" onclick="setPayment('cod')" class="pay-btn active uppercase text-xs">貨到付款</div><div id="pay-bank" onclick="setPayment('bank')" class="pay-btn uppercase text-xs">銀行轉帳</div></div>
+                <button onclick="submitOrderViaEmail()" class="w-full bg-emerald-900 text-white py-8 rounded-full font-black text-xl hover:bg-orange-600 transition">傳送 Gmail</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const config = {
+            dm: { name: '大目釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1380, d: '精品級 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1180, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1080, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 880, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 850, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 750, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 650, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 550, d: '良果級 | 小果 | 小禮盒' } } },
+            fn: { name: '鳳梨釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1450, d: '精品級 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1250, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1150, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 1050, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 950, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 850, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 750, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 650, d: '良果級 | 小果 | 小禮盒' } } }
+        };
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+        function mobileNavigate(pageId) { showPage(pageId); toggleMobileMenu(); }
+        let paymentMethod = 'cod';
+        function setPayment(method) { paymentMethod = method; document.getElementById('pay-cod').classList.toggle('active', method === 'cod'); document.getElementById('pay-bank').classList.toggle('active', method === 'bank'); }
+        function setSpec(type, grade, size, box) { const item = config[type]; if (grade) { item.grade = grade; document.querySelectorAll(`[id^=${type}-grade]`).forEach(b=>b.classList.remove('active')); document.getElementById(`${type}-grade-${grade}`).classList.add('active'); } if (size) { item.size = size; document.querySelectorAll(`[id^=${type}-size]`).forEach(b=>b.classList.remove('active')); document.getElementById(`${type}-size-${size}`).classList.add('active'); } if (box) { item.box = box; document.querySelectorAll(`[id^=${type}-box]`).forEach(b=>b.classList.remove('active')); document.getElementById(`${type}-box-${box}`).classList.add('active'); } const data = item.prices[`${item.grade}-${item.size}-${item.box}`]; document.getElementById(`${type}-price`).innerText = `NT$ ${data.p.toLocaleString()}`; document.getElementById(`${type}-desc`).innerText = data.d; }
+        function addSpecToCart(type) { const item = config[type]; const data = item.prices[`${item.grade}-${item.size}-${item.box}`]; addToCart(`${item.name} | ${data.d}`, data.p); }
+        let cart = [];
+        function showPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const target = document.getElementById(`${pageId}-page`); if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+        function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('open'); document.getElementById('cart-overlay').classList.toggle('hidden'); }
+        function addToCart(name, price) { cart.push({ name, price }); updateCart(); if (!document.getElementById('cart-sidebar').classList.contains('open')) toggleCart(); }
+        function updateCart() { const container = document.getElementById('cart-items'); document.getElementById('cart-count').innerText = cart.length; container.innerHTML = cart.map((item, i) => `<div class="flex justify-between items-center bg-white p-6 rounded-2xl border border-emerald-50 shadow-inner"><div class="font-bold text-xs text-emerald-900"><p class="brand-font uppercase italic">${item.name}</p><p class="text-orange-500 font-mono mt-1">NT$ ${item.price}</p></div><button onclick="removeFromCart(${i})" class="text-[8px] opacity-40 hover:opacity-100 uppercase transition">移除</button></div>`).join(''); const total = cart.reduce((s, item) => s + item.price, 0); document.getElementById('cart-total').innerText = `NT$ ${total.toLocaleString()}`; }
+        function removeFromCart(i) { cart.splice(i, 1); updateCart(); }
+        function openCheckoutModal() { if(cart.length === 0) return alert('籃子是空的！'); document.getElementById('checkout-modal').classList.remove('hidden'); }
+        function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
+        function submitOrderViaEmail() {
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+            if(!name || !phone || !address) return alert('請填寫完整收件資訊！');
+            const total = cart.reduce((s, item) => s + item.price, 0);
+            const productList = cart.map(i => '- ' + i.name).join('%0D%0A');
+            const payText = paymentMethod === 'cod' ? '【貨到付款】' : '【銀行轉帳】';
+            const subject = encodeURIComponent(`【若野果物 訂購】${name}`);
+            const bodyText = `職人您好，訂購單：%0D%0A${productList}%0D%0A總金額：NT$ ${total.toLocaleString()}%0D%0A付款：${payText}%0D%0A收件人：${name}%0D%0A電話：${phone}%0D%0A收件：${address}`;
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=wakanoruoye@gmail.com&su=${subject}&body=${bodyText}`, '_blank');
+        }
+    </script>
+</body>
+</html>
