@@ -22,11 +22,11 @@
         /* 商品按鈕：森林綠風格 */
         .spec-btn { border: 1.5px solid #d1d9d1; padding: 10px 10px; border-radius: 8px; font-weight: 700; transition: all 0.3s; color: #7f8c8d; font-size: 0.75rem; background: white; width: 100%; }
         .spec-btn.active { border-color: #064e3b; background-color: #064e3b; color: white; }
-        .pay-btn { border: 2px solid #d1d9d1; padding: 12px; border-radius: 12px; flex: 1; text-align: center; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .pay-btn { border: 2px solid #d1d9d1; padding: 12px; border-radius: 8px; flex: 1; text-align: center; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .pay-btn.active { border-color: #064e3b; background-color: #064e3b; color: white; }
         .hero-gradient { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(6,78,59,0.7) 100%); }
 
-        /* 暫無販售區：維持灰階以示區別 */
+        /* 暫無販售：圖片保留但灰階 */
         .sold-out { opacity: 0.6; filter: grayscale(1); pointer-events: none; position: relative; }
         .sold-out::after { content: "非產季 / 暫無販售"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(6,78,59,0.9); color: white; padding: 10px 20px; border-radius: 4px; font-weight: bold; z-index: 20; letter-spacing: 0.1em; font-size: 0.8rem; }
     </style>
@@ -42,8 +42,7 @@
             <button onclick="showPage('home')" class="hover:text-emerald-900 transition">當季選購</button>
             <button onclick="showPage('about')" class="hover:text-emerald-900 transition">關於我們</button>
             <button onclick="showPage('philosophy')" class="hover:text-emerald-900 transition">選果哲學</button>
-            <button onclick="showPage('nutrition')" class="hover:text-emerald-900 transition">果物百科</button>
-            <button onclick="showPage('guide')" class="hover:text-emerald-900 transition">熟成指南</button>
+            <button onclick="showPage('nutrition')" class="hover:text-emerald-900 transition">果物百科</button> <button onclick="showPage('guide')" class="hover:text-emerald-900 transition">熟成指南</button>
             <button onclick="showPage('faq')" class="hover:text-emerald-900 transition">常見問答</button>
         </div>
         <button onclick="toggleCart()" class="relative bg-emerald-900 text-white p-4 rounded-full shadow-lg hover:scale-105 transition">
@@ -52,13 +51,12 @@
         </button>
     </nav>
 
-    <div id="mobile-menu" class="fixed inset-0 bg-emerald-900 z-[60] mobile-menu flex flex-col items-center justify-center space-y-10">
-        <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg></button>
+   <div id="mobile-menu" class="fixed inset-0 bg-emerald-900 z-[60] mobile-menu flex flex-col items-center justify-center space-y-10">
+        <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" /></svg></button>
         <button onclick="mobileNavigate('home')" class="text-2xl text-white font-bold brand-font">當季選購</button>
         <button onclick="mobileNavigate('about')" class="text-2xl text-white font-bold brand-font">關於我們</button>
         <button onclick="mobileNavigate('philosophy')" class="text-2xl text-white font-bold brand-font">選果哲學</button>
-        <button onclick="mobileNavigate('nutrition')" class="text-2xl text-white font-bold brand-font">果物百科</button>
-        <button onclick="mobileNavigate('guide')" class="text-2xl text-white font-bold brand-font">熟成指南</button>
+        <button onclick="mobileNavigate('nutrition')" class="text-2xl text-white font-bold brand-font">果物百科</button> <button onclick="mobileNavigate('guide')" class="text-2xl text-white font-bold brand-font">熟成指南</button>
         <button onclick="mobileNavigate('faq')" class="text-2xl text-white font-bold brand-font">常見問答</button>
     </div>
 
@@ -180,7 +178,7 @@
                     <div class="md:w-1/2 space-y-10 text-right md:text-left">
                         <span class="text-emerald-800 font-mono text-sm tracking-widest font-bold">Vol. 02 / 鳳梨釋迦</span>
                         <h4 class="text-5xl font-black brand-font text-emerald-900">熱帶酸甜之王</h4>
-                        <p class="text-slate-500 text-xl leading-loose">果肉潔白如玉，口感 Q 彈有勁。獨特的微酸風味中和了甜膩。含豐富膳食纖維與維生素 B2。</p>
+                        <p class="text-slate-500 text-xl leading-loose">果肉潔白如玉，口感 Q 彈有勁。獨特的微酸風味中和了甜膩，散發淡淡鳳梨香氣。含有豐富膳食纖維與維生素 B2。</p>
                     </div>
                     <div class="md:w-1/2 h-[450px] rounded-[60px] overflow-hidden shadow-2xl border-8 border-white">
                         <img src="https://images.unsplash.com/photo-1615485500704-8e990f3900f1?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition duration-1000">
@@ -239,9 +237,9 @@
         <div class="max-w-6xl mx-auto text-center md:text-left text-[10px]">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20 uppercase tracking-widest">
                 <a href="tel:0912345678" class="group"><h4 class="text-orange-400 font-bold mb-4">Telephone</h4><p class="text-white text-lg">0912-345-678</p></a>
-                <a href="#" class="group"><h4 class="text-orange-400 font-bold mb-4">LINE</h4><p class="text-white text-lg">@wakanofruit</p></a>
-                <a href="#" class="group"><h4 class="text-orange-400 font-bold mb-4">Facebook</h4><p class="text-white text-lg">若野果物</p></a>
-                <a href="#" class="group"><h4 class="text-orange-400 font-bold mb-4">Instagram</h4><p class="text-white text-lg italic">wakano_luye</p></a>
+                <a href="https://line.me/ti/p/@wakanofruit" target="_blank" class="group"><h4 class="text-orange-400 font-bold mb-4">LINE</h4><p class="text-white text-lg">@wakanofruit</p></a>
+                <a href="【請把Facebook網址貼在這裡】" target="_blank" class="group"><h4 class="text-orange-400 font-bold mb-4">Facebook</h4><p class="text-white text-lg">若野果物</p></a>
+                <a href="【請把IG網址貼在這裡】" target="_blank" class="group"><h4 class="text-orange-400 font-bold mb-4">Instagram</h4><p class="text-white text-lg italic">wakano_luye</p></a>
             </div>
             <div class="text-center pt-10 border-t border-emerald-800 opacity-30">© 2025 Wakano Fruit All Rights Reserved.</div>
         </div>
@@ -270,8 +268,8 @@
 
     <script>
         const config = {
-            dm: { name: '大目釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1380, d: '精品禮盒 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1180, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1080, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 880, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 850, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 750, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 650, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 550, d: '良果級 | 小果 | 小禮盒' } } },
-            fn: { name: '鳳梨釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1450, d: '精品級 | 大果 | 大禮盒' }, 'premium-small-big-box': { p: 1250, d: '精品級 | 小果 | 大禮盒' }, 'premium-big-small-box': { p: 1150, d: '精品級 | 大果 | 小禮盒' }, 'premium-small-small-box': { p: 1050, d: '精品級 | 小果 | 小禮盒' }, 'basic-big-big-box': { p: 950, d: '良果級 | 大果 | 大禮盒' }, 'basic-small-big-box': { p: 850, d: '良果級 | 小果 | 大禮盒' }, 'basic-big-small-box': { p: 750, d: '良果級 | 大果 | 小禮盒' }, 'basic-small-small-box': { p: 650, d: '良果級 | 小果 | 小禮盒' } } }
+            dm: { name: '大目釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1380, d: '精品禮盒 | 大果 | 大禮盒裝' }, 'premium-small-big-box': { p: 1180, d: '精品禮盒 | 小果 | 大禮盒裝' }, 'premium-big-small-box': { p: 1080, d: '精品禮盒 | 大果 | 小禮盒裝' }, 'premium-small-small-box': { p: 880, d: '精品禮盒 | 小果 | 小禮盒裝' }, 'basic-big-big-box': { p: 850, d: '良果級 | 大果 | 大禮盒裝' }, 'basic-small-big-box': { p: 750, d: '良果級 | 小果 | 大禮盒裝' }, 'basic-big-small-box': { p: 650, d: '良果級 | 大果 | 小禮盒裝' }, 'basic-small-small-box': { p: 550, d: '良果級 | 小果 | 小禮盒裝' } } },
+            fn: { name: '鳳梨釋迦', grade: 'premium', size: 'big', box: 'big-box', prices: { 'premium-big-big-box': { p: 1450, d: '精品禮盒 | 大果 | 大禮盒裝' }, 'premium-small-big-box': { p: 1250, d: '精品禮盒 | 小果 | 大禮盒裝' }, 'premium-big-small-box': { p: 1150, d: '精品禮盒 | 大果 | 小禮盒裝' }, 'premium-small-small-box': { p: 1050, d: '精品禮盒 | 小果 | 小禮盒裝' }, 'basic-big-big-box': { p: 950, d: '良果級 | 大果 | 大禮盒裝' }, 'basic-small-big-box': { p: 850, d: '良果級 | 小果 | 大禮盒裝' }, 'basic-big-small-box': { p: 750, d: '良果級 | 大果 | 小禮盒裝' }, 'basic-small-small-box': { p: 650, d: '良果級 | 小果 | 小禮盒裝' } } }
         };
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
         function mobileNavigate(pageId) { showPage(pageId); toggleMobileMenu(); }
@@ -280,11 +278,15 @@
         function setSpec(type, grade, size, box) { const item = config[type]; if (grade) { item.grade = grade; document.querySelectorAll(`[id^=${type}-grade]`).forEach(b=>b.classList.remove('active')); document.getElementById(`${type}-grade-${grade}`).classList.add('active'); } if (size) { item.size = size; document.querySelectorAll(`[id^=${type}-size]`).forEach(b=>b.classList.remove('active')); document.getElementById(`${type}-size-${size}`).classList.add('active'); } if (box) { item.box = box; document.querySelectorAll(`[id^=${type}-box]`).forEach(b=>b.classList.remove('active')); document.getElementById(`${type}-box-${box}`).classList.add('active'); } const data = item.prices[`${item.grade}-${item.size}-${item.box}`]; document.getElementById(`${type}-price`).innerText = `NT$ ${data.p.toLocaleString()}`; document.getElementById(`${type}-desc`).innerText = data.d; }
         function addSpecToCart(type) { const item = config[type]; const data = item.prices[`${item.grade}-${item.size}-${item.box}`]; addToCart(`${item.name} | ${data.d}`, data.p); }
         let cart = [];
-        function showPage(pageId) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); const target = document.getElementById(`${pageId}-page`); if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); } }
+        function showPage(pageId) { 
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(`${pageId}-page`);
+            if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        }
         function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
         function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('open'); document.getElementById('cart-overlay').classList.toggle('hidden'); }
         function addToCart(name, price) { cart.push({ name, price }); updateCart(); if (!document.getElementById('cart-sidebar').classList.contains('open')) toggleCart(); }
-        function updateCart() { const container = document.getElementById('cart-items'); document.getElementById('cart-count').innerText = cart.length; container.innerHTML = cart.map((item, i) => `<div class="flex justify-between items-center bg-white p-6 rounded-2xl border border-emerald-50 shadow-inner"><div class="font-bold text-xs text-emerald-900"><p class="brand-font uppercase italic">${item.name}</p><p class="text-orange-500 font-mono mt-1">NT$ ${item.price}</p></div><button onclick="removeFromCart(${i})" class="text-[8px] opacity-40 hover:opacity-100 uppercase transition">移除</button></div>`).join(''); const total = cart.reduce((s, item) => s + item.price, 0); document.getElementById('cart-total').innerText = `NT$ ${total.toLocaleString()}`; }
+        function updateCart() { const container = document.getElementById('cart-items'); document.getElementById('cart-count').innerText = cart.length; if (cart.length === 0) { container.innerHTML = '<p class="text-slate-300 text-center py-20 font-bold italic tracking-widest text-[10px]">您的籃子是空的</p>'; document.getElementById('cart-total').innerText = 'NT$ 0'; return; } container.innerHTML = cart.map((item, i) => `<div class="flex justify-between items-center bg-white p-6 rounded-2xl border border-emerald-50 shadow-inner"><div class="font-bold text-xs text-emerald-900"><p class="brand-font uppercase italic">${item.name}</p><p class="text-orange-500 font-mono mt-1">NT$ ${item.price}</p></div><button onclick="removeFromCart(${i})" class="text-[8px] opacity-40 hover:opacity-100 uppercase transition">移除</button></div>`).join(''); const total = cart.reduce((s, item) => s + item.price, 0); document.getElementById('cart-total').innerText = `NT$ ${total.toLocaleString()}`; }
         function removeFromCart(i) { cart.splice(i, 1); updateCart(); }
         function openCheckoutModal() { if(cart.length === 0) return alert('籃子是空的！'); document.getElementById('checkout-modal').classList.remove('hidden'); }
         function closeCheckoutModal() { document.getElementById('checkout-modal').classList.add('hidden'); }
